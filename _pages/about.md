@@ -97,7 +97,6 @@ Work in progress:
 [[Code]](https://github.com/ExtraOrdinaryLab/vibe)
 
 
-
 # 🏅 Honours and Awards
 
 - *2025.09*, Dean's Doctoral Scholarship Award, University of Manchester.
