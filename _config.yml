@@ -8,7 +8,7 @@
 # Site Settings
 title                    : "Yang Wang"
 description              : "This is the academic homepage of Yang Wang."
-repository               : "penguinwang96825/penguinwang96825.github.io"
+repository               : "penguinwang96825/blog"
 google_scholar_stats_use_cdn : false
 
 # google analytics
@@ -28,7 +28,7 @@ author:
   employer         : # "Automated Analytics"
   pubmed           : 
   googlescholar    : "https://scholar.google.com/citations?user=EPrTek0AAAAJ"
-  email            : "yang.wang-27@postgrad.manchester.ac.uk"
+  email            : "yang.wang-2@manchester.ac.uk"
   researchgate     : "https://www.researchgate.net/profile/Yang-Wang-715"
   uri              : 
   bitbucket        :
