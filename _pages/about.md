@@ -19,20 +19,18 @@ redirect_from:
 
 # About Me
 
-I received my MSc in Computer Science with Speech and Language Processing from the University of Sheffield, where I was advised by Prof. Chenghua Lin (now at the University of Manchester). I earned my BSc in Applied Mathematics from National Chung Hsing University, Taiwan. I have published several papers, available on <a href='https://scholar.google.com/citations?user=EPrTek0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>.
+I received my MSc in Computer Science with Speech and Language Processing from the University of Sheffield, where I was advised by Prof. Chenghua Lin (now at the University of Manchester). I earned my BSc in Applied Mathematics from National Chung Hsing University, Taiwan. All my publications are available on <a href='https://scholar.google.com/citations?user=EPrTek0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>.
 
 My research interest includes: 
 - Natural Language Processing
 - Audio and Speech Processing
 - Multi-modality Learning
-- Machine Learning
 - Adversarial Attack and Defence
 - Contrastive Learning
 
 Work in progress:
-- Knowledge Boundary and Reasoning Boundary
+- Knowledge/Reasoning Boundary
 - Psychological LLMs
-- Omni-modal Embedding
 
 
 # 🎓 Educations 
@@ -99,7 +97,8 @@ Work in progress:
 
 # 🏅 Honours and Awards
 
-- *2025.09*, Dean's Doctoral Scholarship Award, University of Manchester.
+- *2025.12*, UKRI Isambard-AI AIRR Award: *Automated Entity Extraction for Call Centre Analytics*.
+- *2025.11*, UKRI Isambard-AI AIRR Award: *Exploring the Knowledge and Reasoning Boundaries of LLMs*.
 - *2025.04*, The NVIDIA Academic Grant Program.
 - *2024.12*, Innovation of the Year at the 26th Doncaster Business Awards. [[News]](https://automatedanalytics.co/automated-analytics-wins-innovation-of-the-year-award)
 - *2024.10*, Turing Innovation Catalyst Manchester.
@@ -122,6 +121,8 @@ Work in progress:
 
 # 🔬 Teaching Experience
 
+- *2026.02 - Present*, Graduate Teaching Assistant for COMP34812 Natural Language Understanding.
+- *2026.02 - Present*, Graduate Teaching Assistant for COMP64702 Transforming Text Into Meaning.
 - *2025.09 - Present*, Graduate Teaching Assistant for COMP64501 Topics in Machine Learning.
 
 # 🏭 Internships
