@@ -41,6 +41,14 @@ Work in progress:
 
 # 📝 Publications 
 
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICASSP 2026</div><img src='images/publications/icassp_2026_chebyshev.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+-	`Yang Wang`, Chenghao Xiao, Yiqi Liu, Chenghua Lin. The Achilles' Heel of Angular Margins: A Chebyshev Polynomial Fix for Speaker Verification. *ICASSP*. 2026 <br />
+[[Code]](https://github.com/ExtraOrdinaryLab/vibe)
+
+</div>
+</div>
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">TACL 2025</div><img src='images/publications/tacl_2025_adversarial.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
@@ -90,9 +98,6 @@ Work in progress:
 
 -	`Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. *ICASSP* (Under Review). 2025 <br />
 [[PDF]](https://arxiv.org/pdf/2309.11895) [[Code]](https://github.com/ExtraOrdinaryLab/confit)
-
--	`Yang Wang`, Chenghao Xiao, Yiqi Liu, Chenghua Lin. The Achilles' Heel of Angular Margins: A Chebyshev Polynomial Fix for Speaker Verification. *ICASSP* (Under Review). 2025 <br />
-[[Code]](https://github.com/ExtraOrdinaryLab/vibe)
 
 
 # 🏅 Honours and Awards
