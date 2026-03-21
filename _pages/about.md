@@ -44,7 +44,7 @@ Work in progress:
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICASSP 2026</div><img src='images/publications/icassp_2026_chebyshev.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
--	`Yang Wang`, Chenghao Xiao, Yiqi Liu, Chenghua Lin. The Achilles' Heel of Angular Margins: A Chebyshev Polynomial Fix for Speaker Verification. *ICASSP*. 2026 <br />
+-	`Yang Wang`, Yiqi Liu, Chenghao Xiao, Chenghua Lin. The Achilles' Heel of Angular Margins: A Chebyshev Polynomial Fix for Speaker Verification. *ICASSP*. 2026 <br />
 [[Code]](https://github.com/ExtraOrdinaryLab/vibe)
 
 </div>

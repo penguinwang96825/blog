@@ -14,11 +14,11 @@ import jsonpickle
 from scholarly import scholarly
 
 
+# Only fetch basic info and stats (much faster than fetching all publications)
 author: dict = scholarly.search_author_id(os.environ['GOOGLE_SCHOLAR_ID'])
-scholarly.fill(author, sections=['basics', 'indices', 'counts', 'publications'])
+scholarly.fill(author, sections=['basics', 'indices', 'counts'])
 name = author['name']
 author['updated'] = str(datetime.now())
-author['publications'] = {v['author_pub_id']:v for v in author['publications']}
 print(json.dumps(author, indent=2))
 os.makedirs('results', exist_ok=True)
 with open(f'results/gs_data.json', 'w') as outfile:
