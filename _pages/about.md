@@ -19,17 +19,14 @@ redirect_from:
 
 # About Me
 
-I received my MSc in Computer Science with Speech and Language Processing from the University of Sheffield, where I was advised by Prof. Chenghua Lin (now at the University of Manchester). I earned my BSc in Applied Mathematics from National Chung Hsing University, Taiwan. All my publications are available on <a href='https://scholar.google.com/citations?user=EPrTek0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>.
+I received my MSc in Computer Science with Speech and Language Processing from the University of Sheffield, where I was advised by Prof. Chenghua Lin (now at the University of Manchester). I earned my BSc in Applied Mathematics from National Chung Hsing University, Taiwan. All publications are available on <a href='https://scholar.google.com/citations?user=EPrTek0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>.
 
 My research interest includes: 
 - Natural Language Processing
 - Audio and Speech Processing
 - Multi-modality Learning
-- Adversarial Attack and Defence
-- Contrastive Learning
 
 Work in progress:
-- Knowledge/Reasoning Boundary
 - Psychological LLMs
 
 
@@ -96,12 +93,13 @@ Work in progress:
 </div>
 
 
--	`Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. *ICASSP* (Under Review). 2025 <br />
+-	`Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. *Interspeech* (Under Review). 2025 <br />
 [[PDF]](https://arxiv.org/pdf/2309.11895) [[Code]](https://github.com/ExtraOrdinaryLab/confit)
 
 
 # 🏅 Honours and Awards
 
+- *2025.12*, N8 CIR Bede HPC Access Award (Project bdman34): *Understanding Boundaries and Interpretability in LLMs*. [[News]](https://n8cir.org.uk/bede/research-projects/manchester/)
 - *2025.12*, UKRI Isambard-AI AIRR Award: *Automated Entity Extraction for Call Centre Analytics*.
 - *2025.11*, UKRI Isambard-AI AIRR Award: *Exploring the Knowledge and Reasoning Boundaries of LLMs*.
 - *2025.04*, The NVIDIA Academic Grant Program.
@@ -112,6 +110,7 @@ Work in progress:
 
 # 📜 Conferences
 
+- *2026.05*, IEEE International Conference on Acoustics, Speech, and Signal Processing, Barcelona, Spain, Poster.
 - *2025.11*, The 2025 Conference on Empirical Methods in Natural Language Processing, Suzhou, China, Oral.
 - *2025.01*, The 31st International Conference on Computational Linguistics, Abu Dhabi, UAE, Oral.
 - *2024.11*, Innovate UK Knowledge Transfer Partnership Associate Conference, Visit.
