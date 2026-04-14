@@ -41,7 +41,7 @@ Work in progress:
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICASSP 2026</div><img src='images/publications/icassp_2026_chebyshev.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 -	`Yang Wang`, Yiqi Liu, Chenghao Xiao, Chenghua Lin. The Achilles' Heel of Angular Margins: A Chebyshev Polynomial Fix for Speaker Verification. *ICASSP*. 2026 <br />
-[[Code]](https://github.com/ExtraOrdinaryLab/vibe)
+[[PDF]](https://arxiv.org/pdf/2601.13198) [[Code]](https://github.com/ExtraOrdinaryLab/vibe)
 </div>
 </div>
 
@@ -84,7 +84,7 @@ Work in progress:
 [[PDF]](https://arxiv.org/pdf/2602.01244) [[Code]](https://github.com/Wusiwei0410/TerminalTraj) [[HuggingFace]](https://huggingface.co/m-a-p/TerminalTraj-32B)
 
 -	William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. 2026 <br />
-[[PDF]](https://arxiv.org/pdf/2603.08281)
+[[PDF]](https://arxiv.org/pdf/2603.08281) [[Code]](https://github.com/wrmthorne/grant-perturbation-analysis)
 
 -	`Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. *Interspeech* (Under Review). 2026 <br />
 [[PDF]](https://arxiv.org/pdf/2309.11895) [[Code]](https://github.com/ExtraOrdinaryLab/confit)
