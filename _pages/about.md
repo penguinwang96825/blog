@@ -24,11 +24,13 @@ I received my MSc in Computer Science with Speech and Language Processing from t
 My research interest includes: 
 - Natural Language Processing
 - Audio and Speech Processing
-- Multi-modality Learning
 
 Work in progress:
 - Psychological LLMs
-
+- Multi-modality
+- Knowledge/Reasoning Boundary
+- Named Entity Recognition
+- Automatic Speech Recognition
 
 # 🎓 Educations 
 
