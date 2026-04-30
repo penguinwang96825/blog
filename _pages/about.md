@@ -38,7 +38,14 @@ Work in progress:
 - *2014.09 - 2018.06*, <a href="https://www.nchu.edu.tw"><img class="svg" src="/images/NCHU_logo.png" width="20pt"></a> BSc in Applied Mathematics, National Chung Hsing University, Taiwan. 
  
 
-# 📝 Publications 
+# 📝 Publications
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICML 2026</div><img src='images/publications/icml_2026_docker.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+-	Siwei Wu, Yizhi Li, Yuyang Song, Wei Zhang, `Yang Wang`, Riza Batista-Navarro, Xian Yang, Mingjie Tang, Bryan Dai, Jian Yang, Chenghua Lin. Large-Scale Terminal Agentic Trajectory Generation from Dockerized Environments. *ICML (Spotlight)*. 2026 <br />
+[[PDF]](https://arxiv.org/pdf/2602.01244) [[Code]](https://github.com/Wusiwei0410/TerminalTraj) [[HuggingFace]](https://huggingface.co/m-a-p/TerminalTraj-32B)
+</div>
+</div>
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICASSP 2026</div><img src='images/publications/icassp_2026_chebyshev.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
@@ -81,9 +88,6 @@ Work in progress:
 [[PDF]](https://aclanthology.org/2025.coling-main.432.pdf) [[Code]](https://github.com/PuReDefence/AdvBench4Text)
 </div>
 </div>
-
--	Siwei Wu, Yizhi Li, Yuyang Song, Wei Zhang, `Yang Wang`, Riza Batista-Navarro, Xian Yang, Mingjie Tang, Bryan Dai, Jian Yang, Chenghua Lin. Large-Scale Terminal Agentic Trajectory Generation from Dockerized Environments. *ICML* (Under Review). 2026 <br />
-[[PDF]](https://arxiv.org/pdf/2602.01244) [[Code]](https://github.com/Wusiwei0410/TerminalTraj) [[HuggingFace]](https://huggingface.co/m-a-p/TerminalTraj-32B)
 
 -	William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. 2026 <br />
 [[PDF]](https://arxiv.org/pdf/2603.08281) [[Code]](https://github.com/wrmthorne/grant-perturbation-analysis)
