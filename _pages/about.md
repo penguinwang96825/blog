@@ -47,6 +47,12 @@ Work in progress:
 </div>
 </div>
 
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Interspeech 2026</div><img src='images/publications/interspeech_2026_ielts.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+-	Hui Xin Koh, `Yang Wang`, Chenghua Lin. A Multi-Agent Framework to Automate Feedback Generation for IELTS Speaking Test using Multimodal SpeechLMs. *Interspeech*. 2026 <br />
+</div>
+</div>
+
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICASSP 2026</div><img src='images/publications/icassp_2026_chebyshev.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 -	`Yang Wang`, Yiqi Liu, Chenghao Xiao, Chenghua Lin. The Achilles' Heel of Angular Margins: A Chebyshev Polynomial Fix for Speaker Verification. *ICASSP*. 2026 <br />
@@ -92,7 +98,7 @@ Work in progress:
 -	William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. 2026 <br />
 [[PDF]](https://arxiv.org/pdf/2603.08281) [[Code]](https://github.com/wrmthorne/grant-perturbation-analysis)
 
--	`Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. *Interspeech* (Under Review). 2026 <br />
+-	`Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. 2026 <br />
 [[PDF]](https://arxiv.org/pdf/2309.11895) [[Code]](https://github.com/ExtraOrdinaryLab/confit)
 
 
@@ -123,11 +129,11 @@ Work in progress:
 - *2022.10 - 2023.04*, Data Scientist, Automated Analytics, Doncaster, UK
 - *2018.12 - 2019.08*, Software Quality Assurance Assistant Engineer, KKStream Limited, Taipei, Taiwan
 
-# 🔬 Teaching Experience
+<!-- # 🔬 Teaching Experience
 
 - *2026.02 - Present*, Graduate Teaching Assistant for COMP34812 Natural Language Understanding.
 - *2026.02 - Present*, Graduate Teaching Assistant for COMP64702 Transforming Text Into Meaning.
-- *2025.09 - Present*, Graduate Teaching Assistant for COMP64501 Topics in Machine Learning.
+- *2025.09 - Present*, Graduate Teaching Assistant for COMP64501 Topics in Machine Learning. -->
 
 # 🏭 Internships
 
