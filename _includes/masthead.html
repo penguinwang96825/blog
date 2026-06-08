@@ -14,20 +14,39 @@
         </ul>
         <ul class="hidden-links hidden"></ul>
       </nav>
-      <span class="theme-toggle-shadow">
-        <button class="theme-toggle switch" type="button" aria-label="Enable dark mode" aria-pressed="false" title="Toggle dark mode">
-          <img class="switch__cloud switch__cloud--2" src="https://assets.codepen.io/58281/cloud-1.svg" alt="">
-          <img class="switch__cloud switch__cloud--1" src="https://assets.codepen.io/58281/cloud-2.svg" alt="">
-          <span class="switch__inner">
-            <span class="switch-globe">
-              <img class="switch-globe__moon" src="https://assets.codepen.io/58281/moon_1.png" alt="">
-              <span class="switch-globe__circle"></span>
-            </span>
-            <img class="switch__stars" src="https://assets.codepen.io/58281/stars.svg" alt="">
-          </span>
-          <span class="theme-toggle__text">Dark</span>
-        </button>
-      </span>
+      <div class="day-night-toggle theme-toggle" id="dayNighttoggle" role="button" tabindex="0" aria-label="Enable dark mode" aria-pressed="false">
+        <div class="toggle-container" id="toggleContainer">
+          <div class="stars" id="stars">
+            <div class="star star--1"></div>
+            <div class="star star--2"></div>
+            <div class="star star--3"></div>
+            <div class="star star--1b"></div>
+            <div class="star star--2b"></div>
+            <div class="star star--3b"></div>
+            <div class="star-round star-round--1"></div>
+            <div class="star-round star-round--2"></div>
+            <div class="star-round star-round--3"></div>
+            <div class="star-round star-round--4"></div>
+            <div class="star-round star-round--5"></div>
+            <div class="star-round star-round--6"></div>
+            <div class="star-round star-round--1b"></div>
+            <div class="star-round star-round--2b"></div>
+            <div class="star-round star-round--3b"></div>
+            <div class="star-round star-round--4b"></div>
+            <div class="star-round star-round--5b"></div>
+            <div class="star-round star-round--6b"></div>
+          </div>
+          <div class="cloud cloud--2"></div>
+          <div class="cloud cloud--1"></div>
+          <div class="radiant sun-radiant" id="sunRadiant"></div>
+          <div class="radiant moon-radiant" id="moonRadiant"></div>
+          <div class="toggle-dot" id="toggleDot">
+            <div class="toggle-crater toggle-crater--1"></div>
+            <div class="toggle-crater toggle-crater--2"></div>
+            <div class="toggle-crater toggle-crater--3"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
