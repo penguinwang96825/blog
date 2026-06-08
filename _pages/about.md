@@ -6,6 +6,7 @@ author_profile: true
 redirect_from: 
   - /about/
   - /about.html
+  - /education/
 ---
 
 {% if site.google_scholar_stats_use_cdn %}
@@ -32,111 +33,9 @@ Work in progress:
 - Named Entity Recognition
 - Automatic Speech Recognition
 
-# 🎓 Educations 
+# 🎓 Education
 
-- *2020.09 - 2021.09*, <a href="https://sheffield.ac.uk/"><img class="svg" src="/images/UoS_logo.png" width="23pt"></a> MSc in Computer Science with Speech and Language Processing, University of Sheffield, UK. 
-- *2014.09 - 2018.06*, <a href="https://www.nchu.edu.tw"><img class="svg" src="/images/NCHU_logo.png" width="20pt"></a> BSc in Applied Mathematics, National Chung Hsing University, Taiwan. 
- 
-
-# 📝 Publications
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICML 2026</div><img src='images/publications/icml_2026_docker.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
--	Siwei Wu, Yizhi Li, Yuyang Song, Wei Zhang, `Yang Wang`, Riza Batista-Navarro, Xian Yang, Mingjie Tang, Bryan Dai, Jian Yang, Chenghua Lin. Large-Scale Terminal Agentic Trajectory Generation from Dockerized Environments. *ICML (Spotlight)*. 2026 <br />
-[[PDF]](https://arxiv.org/pdf/2602.01244) [[Code]](https://github.com/Wusiwei0410/TerminalTraj) [[HuggingFace]](https://huggingface.co/m-a-p/TerminalTraj-32B)
-</div>
-</div>
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Interspeech 2026</div><img src='images/publications/interspeech_2026_ielts.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
--	Hui Xin Koh, `Yang Wang`, Chenghua Lin. A Multi-Agent Framework to Automate Feedback Generation for IELTS Speaking Test using Multimodal SpeechLMs. *Interspeech*. 2026 <br />
-</div>
-</div>
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICASSP 2026</div><img src='images/publications/icassp_2026_chebyshev.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
--	`Yang Wang`, Yiqi Liu, Chenghao Xiao, Chenghua Lin. The Achilles' Heel of Angular Margins: A Chebyshev Polynomial Fix for Speaker Verification. *ICASSP*. 2026 <br />
-[[PDF]](https://arxiv.org/pdf/2601.13198) [[Code]](https://github.com/ExtraOrdinaryLab/vibe)
-</div>
-</div>
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">TACL 2025</div><img src='images/publications/tacl_2025_adversarial.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
--	`Yang Wang`, Chenghao Xiao, Yizhi Li, Stuart E. Middleton, Noura Al Moubayed, Chenghua Lin. Adversarial Defence without Adversarial Defence: Enhancing Language Model Robustness via Instance-level Principal Component Removal. *TACL*. 2025 <br />
-[[PDF]](https://arxiv.org/pdf/2507.21750) [[Code]](https://github.com/PuReDefence/PuRe)
-</div>
-</div>
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">TACL 2025</div><img src='images/publications/tacl_2025_inversion.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
--	Hanhua Hong, Chenghao Xiao, `Yang Wang`, Yiqi Liu, Wenge Rong, Chenghua Lin. Beyond One-Size-Fits-All: Inversion Learning for Highly Effective NLG Evaluation Prompts. *TACL*. 2025 <br />
-[[PDF]](https://arxiv.org/pdf/2504.21117) [[Code]](https://github.com/KOU-199024/Inverse-Prompt)
-</div>
-</div>
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">EMNLP 2025</div><img src='images/publications/emnlp_2025_drivelology.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
--	`Yang Wang`, Chenghao Xiao, Chia-Yi Hsiao, Zi Yan Chang, Chi-Li Chen, Tyler Loakman, Chenghua Lin. Drivel-ology: Challenging LLMs with Interpreting Nonsense with Depth. *EMNLP*. 2025 <br />
-[[PDF]](https://arxiv.org/pdf/2509.03867) [[Code]](https://github.com/ExtraOrdinaryLab/drivelology) [[HuggingFace]](https://huggingface.co/datasets/extraordinarylab/drivel-hub)
-</div>
-</div>
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">COLING 2025</div><img src='images/publications/coling_2025_agent.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
--	Tomas Goldsack, `Yang Wang`, Chenghua Lin, Chung-Chi Chen. From Facts to Insights: A Study on the Generation and Evaluation of Analytical Reports for Deciphering Earnings Calls. *COLING*. 2025 <br />
-[[PDF]](https://aclanthology.org/2025.coling-main.705.pdf)
-</div>
-</div>
-
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">COLING 2025</div><img src='images/publications/coling_2025_adversarial.png' alt="sym" width="100%"></div></div>
-<div class='paper-box-text' markdown="1">
--	`Yang Wang`, Chenghua Lin. Tougher Text, Smarter Models: Raising the Bar for Adversarial Defence Benchmarks. *COLING*. 2025 <br />
-[[PDF]](https://aclanthology.org/2025.coling-main.432.pdf) [[Code]](https://github.com/PuReDefence/AdvBench4Text)
-</div>
-</div>
-
--	William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. 2026 <br />
-[[PDF]](https://arxiv.org/pdf/2603.08281) [[Code]](https://github.com/wrmthorne/grant-perturbation-analysis)
-
--	`Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. 2026 <br />
-[[PDF]](https://arxiv.org/pdf/2309.11895) [[Code]](https://github.com/ExtraOrdinaryLab/confit)
-
-
-# 🏅 Honours and Awards
-
-- *2026.04*, UKRI Isambard-AI AIRR Award: *Scaling PII Redaction in Noisy Transcripts using Synthetic Data*.
-- *2025.12*, N8 CIR Bede HPC Access Award (Project bdman34): *Understanding Boundaries and Interpretability in LLMs*. [[News]](https://n8cir.org.uk/bede/research-projects/manchester/)
-- *2025.12*, UKRI Isambard-AI AIRR Award: *Automated Entity Extraction for Call Centre Analytics*.
-- *2025.11*, UKRI Isambard-AI AIRR Award: *Exploring the Knowledge and Reasoning Boundaries of LLMs*.
-- *2025.04*, The NVIDIA Academic Grant Program.
-- *2024.12*, Innovation of the Year at the 26th Doncaster Business Awards. [[News]](https://automatedanalytics.co/automated-analytics-wins-innovation-of-the-year-award)
-- *2024.10*, Turing Innovation Catalyst Manchester.
-- *2023.04*, Innovate UK Knowledge Transfer Partnership.
-
-
-# 📜 Conferences
-
-- *2026.05*, IEEE International Conference on Acoustics, Speech, and Signal Processing, Barcelona, Spain, Poster.
-- *2025.11*, The 2025 Conference on Empirical Methods in Natural Language Processing, Suzhou, China, Oral.
-- *2025.01*, The 31st International Conference on Computational Linguistics, Abu Dhabi, UAE, Oral.
-- *2024.11*, Innovate UK Knowledge Transfer Partnership Associate Conference, Visit.
-
-
-# 💼 Work Experience
-
-- *2025.04 - Present*, Machine Learning and Natural Language Processing Researcher, Automated Analytics, Doncaster, UK
-- *2023.04 - 2024.04*, Machine Learning and Natural Language Processing Engineer (KTP Associate), University of Sheffield, Sheffield, UK
-- *2022.10 - 2023.04*, Data Scientist, Automated Analytics, Doncaster, UK
-- *2018.12 - 2019.08*, Software Quality Assurance Assistant Engineer, KKStream Limited, Taipei, Taiwan
-
-<!-- # 🔬 Teaching Experience
-
-- *2026.02 - Present*, Graduate Teaching Assistant for COMP34812 Natural Language Understanding.
-- *2026.02 - Present*, Graduate Teaching Assistant for COMP64702 Transforming Text Into Meaning.
-- *2025.09 - Present*, Graduate Teaching Assistant for COMP64501 Topics in Machine Learning. -->
-
-# 🏭 Internships
-
-- *2021.12 - 2022.10*, Research Intern, Automated Analytics, Doncaster, UK.
-- *2021.05 - 2022.05*, Research Intern, The VoiceBase Centre, Sheffield, UK.
-- *2020.07 - 2020.08*, Research Intern, Cinnamon AI, Taipei, Taiwan.
+- *2020.09 - 2021.09*, MSc in Computer Science with Speech and Language Processing, University of Sheffield, UK.
+- *2014.09 - 2018.06*, BSc in Applied Mathematics, National Chung Hsing University, Taiwan.
+<!-- - *2020.09 - 2021.09*, <a href="https://sheffield.ac.uk/"><img class="svg" src="/images/UoS_logo.png" width="23pt"></a> MSc in Computer Science with Speech and Language Processing, University of Sheffield, UK. -->
+<!-- - *2014.09 - 2018.06*, <a href="https://www.nchu.edu.tw"><img class="svg" src="/images/NCHU_logo.png" width="20pt"></a> BSc in Applied Mathematics, National Chung Hsing University, Taiwan. -->

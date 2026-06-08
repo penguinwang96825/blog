@@ -27,6 +27,7 @@ GEM
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.1)
     ffi (1.15.5)
+    ffi (1.15.5-x64-unknown)
     forwardable-extended (2.6.0)
     gemoji (3.0.1)
     github-pages (227)
@@ -256,7 +257,8 @@ GEM
 
 PLATFORMS
   arm64-darwin-24
-  x64-mingw-ucrt
+  universal-darwin-25
+  x64-unknown
 
 DEPENDENCIES
   github-pages
