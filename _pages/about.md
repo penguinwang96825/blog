@@ -20,18 +20,24 @@ redirect_from:
 
 # About Me
 
-I received my MSc in Computer Science with Speech and Language Processing from the University of Sheffield, where I was advised by Prof. Chenghua Lin (now at the University of Manchester). I earned my BSc in Applied Mathematics from National Chung Hsing University, Taiwan. All publications are available on <a href='https://scholar.google.com/citations?user=EPrTek0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>.
+I like ideas that look simple because they have done the hard work.
 
-My research interest includes: 
+My research lies between language, speech, and intelligence. I am interested in how machines understand words, signals, knowledge, and the world behind them. I am particularly drawn to mechanisms that are simple, robust, and useful without unnecessary complexity.
+
+This perspective has led me to work on natural language processing, speech technology, multimodal learning, and large language models. More recently, I have become interested in the cognitive and psychological behaviours of language models, especially what they reveal about reasoning, knowledge, and the limits of machine intelligence. All publications are available on <a href='https://scholar.google.com/citations?user=EPrTek0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>.
+
+<!-- I received my MSc in Computer Science with Speech and Language Processing from the University of Sheffield, where I was advised by Prof. Chenghua Lin (now at the University of Manchester). I earned my BSc in Applied Mathematics from National Chung Hsing University, Taiwan. All publications are available on <a href='https://scholar.google.com/citations?user=EPrTek0AAAAJ'><img src="https://img.shields.io/endpoint?url={{ url | url_encode }}&logo=Google%20Scholar&labelColor=f6f6f6&color=9cf&style=flat&label=citations"></a>. -->
+
+<!-- My research interest includes: 
 - Natural Language Processing
-- Audio and Speech Processing
+- Audio and Speech Processing -->
 
-Work in progress:
+<!-- Work in progress:
 - Psychological LLMs
 - Multi-modality
 - Knowledge/Reasoning Boundary
 - Named Entity Recognition
-- Automatic Speech Recognition
+- Automatic Speech Recognition -->
 
 # 🎓 Education
 
