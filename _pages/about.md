@@ -18,7 +18,7 @@ redirect_from:
 
 <span class='anchor' id='about-me'></span>
 
-# About Me
+# 👋 About Me
 
 I like ideas that look simple because they have done the hard work.
 

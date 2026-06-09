@@ -67,7 +67,7 @@ redirect_from:
 - William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. 2026 <br />
 [[PDF]](https://arxiv.org/pdf/2603.08281) [[Code]](https://github.com/wrmthorne/grant-perturbation-analysis)
 
-- `Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. 2026 <br />
+- `Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. 2023 <br />
 [[PDF]](https://arxiv.org/pdf/2309.11895) [[Code]](https://github.com/ExtraOrdinaryLab/confit)
 
 # 📜 Conferences
