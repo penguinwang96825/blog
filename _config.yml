@@ -23,7 +23,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 author:
   name             : "Yang Wang"
   avatar           : "images/avatar.png"
-  bio              : "University of Manchester"
+  bio              : "大道至簡"
   location         : "Manchester, UK"
   employer         : # "Automated Analytics"
   pubmed           : 

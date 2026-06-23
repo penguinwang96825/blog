@@ -11,6 +11,13 @@ redirect_from:
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICML 2026</div><img src='/images/publications/icml_2026_docker.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
+- William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. *ACM HT. 2026 <br />
+[[PDF]](https://arxiv.org/pdf/2603.08281) [[Code]](https://github.com/wrmthorne/grant-perturbation-analysis)
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICML 2026</div><img src='/images/publications/icml_2026_docker.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
 - Siwei Wu, Yizhi Li, Yuyang Song, Wei Zhang, `Yang Wang`, Riza Batista-Navarro, Xian Yang, Mingjie Tang, Bryan Dai, Jian Yang, Chenghua Lin. Large-Scale Terminal Agentic Trajectory Generation from Dockerized Environments. *ICML (Spotlight)*. 2026 <br />
 [[PDF]](https://arxiv.org/pdf/2602.01244) [[Code]](https://github.com/Wusiwei0410/TerminalTraj) [[HuggingFace]](https://huggingface.co/m-a-p/TerminalTraj-32B)
 </div>
@@ -64,8 +71,7 @@ redirect_from:
 </div>
 </div>
 
-- William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. 2026 <br />
-[[PDF]](https://arxiv.org/pdf/2603.08281) [[Code]](https://github.com/wrmthorne/grant-perturbation-analysis)
+# 📚 Preprint
 
 - `Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. 2023 <br />
 [[PDF]](https://arxiv.org/pdf/2309.11895) [[Code]](https://github.com/ExtraOrdinaryLab/confit)
