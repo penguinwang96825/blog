@@ -11,7 +11,7 @@ redirect_from:
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICML 2026</div><img src='/images/publications/acm_ht_2026_perturbation.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
-- William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. *ACM HT. 2026 <br />
+- William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. *ACM HT*. 2026 <br />
 [[PDF]](https://arxiv.org/pdf/2603.08281) [[Code]](https://github.com/wrmthorne/grant-perturbation-analysis)
 </div>
 </div>
