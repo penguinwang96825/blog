@@ -24,6 +24,17 @@ SERPAPI_ENDPOINT = "https://serpapi.com/search.json"
 PROFILE_ID_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 
+def safe_int(value, default=None):
+    """Convert API numeric values while tolerating null and empty strings."""
+    if value is None or value == "":
+        return default
+
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
 def request_serpapi(
     author_id: str,
     api_key: str,
@@ -48,38 +59,56 @@ def request_serpapi(
     )
 
     for attempt in range(1, attempts + 1):
-        logger.info(
-            "Requesting Scholar data from SerpApi (%d/%d)",
-            attempt,
-            attempts,
-        )
-
         try:
+            logger.info(
+                "Requesting Scholar data from SerpApi (%d/%d)",
+                attempt,
+                attempts,
+            )
+
             with urlopen(request, timeout=60) as response:
                 data = json.load(response)
 
             if data.get("error"):
-                raise RuntimeError(f"SerpApi error: {data['error']}")
+                raise RuntimeError(
+                    f"SerpApi error: {data['error']}"
+                )
 
-            status = data.get("search_metadata", {}).get("status")
+            status = data.get(
+                "search_metadata",
+                {},
+            ).get("status")
+
             if status == "Error":
-                raise RuntimeError("SerpApi search failed")
+                raise RuntimeError(
+                    "SerpApi search failed"
+                )
 
             return data
 
         except HTTPError as error:
-            body = error.read().decode("utf-8", errors="replace")
+            body = error.read().decode(
+                "utf-8",
+                errors="replace",
+            )
 
             try:
-                message = json.loads(body).get("error", body)
+                message = json.loads(body).get(
+                    "error",
+                    body,
+                )
             except json.JSONDecodeError:
                 message = body
 
             last_error = RuntimeError(
-                f"SerpApi HTTP {error.code}: {message[:300]}"
+                f"SerpApi HTTP {error.code}: "
+                f"{message[:300]}"
             )
 
-            retryable = error.code == 429 or 500 <= error.code < 600
+            retryable = (
+                error.code == 429
+                or 500 <= error.code < 600
+            )
 
         except (URLError, TimeoutError) as error:
             last_error = RuntimeError(
@@ -91,14 +120,18 @@ def request_serpapi(
             raise last_error
 
         delay = 10 * attempt
+
         logger.warning(
             "Request failed; retrying in %d seconds: %s",
             delay,
             last_error,
         )
+
         time.sleep(delay)
 
-    raise RuntimeError("SerpApi returned no result")
+    raise RuntimeError(
+        "SerpApi returned no result"
+    )
 
 
 def metric_values(
@@ -109,14 +142,21 @@ def metric_values(
     try:
         row = table[position]
 
-        # 英文通常是 h_index、i10_index。
-        # next(iter(...)) 可以兼容 SerpApi 回傳其他語言的欄位名稱。
-        values = row.get(expected_key) or next(iter(row.values()))
+        # 英文通常會回傳 citations、h_index、i10_index。
+        # 如果欄位名稱因語言不同而改變，就讀取該列的第一組資料。
+        values = (
+            row.get(expected_key)
+            or next(iter(row.values()))
+        )
 
-        total = int(values["all"])
+        total = safe_int(
+            values.get("all"),
+            0,
+        )
+
         since = next(
             (
-                int(value)
+                safe_int(value)
                 for key, value in values.items()
                 if key != "all"
             ),
@@ -133,7 +173,8 @@ def metric_values(
         ValueError,
     ) as error:
         raise RuntimeError(
-            f"Invalid Scholar metric at position {position}"
+            f"Invalid Scholar metric "
+            f"at position {position}"
         ) from error
 
 
@@ -141,9 +182,11 @@ def parse_author(data: dict) -> dict:
     try:
         author = data["author"]
         table = data["cited_by"]["table"]
+
     except (KeyError, TypeError) as error:
         raise RuntimeError(
-            "SerpApi response is missing author metrics"
+            "SerpApi response is missing "
+            "author metrics"
         ) from error
 
     citedby, citedby5y = metric_values(
@@ -151,11 +194,13 @@ def parse_author(data: dict) -> dict:
         0,
         "citations",
     )
+
     hindex, hindex5y = metric_values(
         table,
         1,
         "h_index",
     )
+
     i10index, i10index5y = metric_values(
         table,
         2,
@@ -164,27 +209,54 @@ def parse_author(data: dict) -> dict:
 
     publications = {}
 
-    for article in data.get("articles", []):
-        citation_id = article.get("citation_id")
+    for article in data.get(
+        "articles",
+        [],
+    ):
+        citation_id = article.get(
+            "citation_id"
+        )
 
         if not citation_id:
             continue
 
+        # cited_by 或 value 都可能是 null。
+        cited_by = (
+            article.get("cited_by")
+            or {}
+        )
+
         publications[citation_id] = {
             "author_pub_id": citation_id,
             "bib": {
-                "title": article.get("title", ""),
-                "author": article.get("authors", ""),
-                "pub_year": article.get("year", ""),
-                "citation": article.get("publication", ""),
+                "title": article.get(
+                    "title",
+                    "",
+                ),
+                "author": article.get(
+                    "authors",
+                    "",
+                ),
+                "pub_year": article.get(
+                    "year",
+                    "",
+                ),
+                "citation": article.get(
+                    "publication",
+                    "",
+                ),
             },
-            "num_citations": int(
-                article.get("cited_by", {}).get("value", 0)
+            "num_citations": safe_int(
+                cited_by.get("value"),
+                0,
             ),
         }
 
     return {
-        "name": author.get("name", ""),
+        "name": author.get(
+            "name",
+            "",
+        ),
         "citedby": citedby,
         "citedby5y": citedby5y,
         "hindex": hindex,
@@ -192,12 +264,20 @@ def parse_author(data: dict) -> dict:
         "i10index": i10index,
         "i10index5y": i10index5y,
         "publications": publications,
-        "updated": datetime.now(timezone.utc).isoformat(),
+        "updated": datetime.now(
+            timezone.utc
+        ).isoformat(),
     }
 
 
-def write_json_atomic(path: Path, data: dict) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
+def write_json_atomic(
+    path: Path,
+    data: dict,
+) -> None:
+    path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
 
     temporary_path = path.with_suffix(
         path.suffix + ".tmp"
@@ -233,9 +313,12 @@ def main() -> int:
         )
         return 2
 
-    if not PROFILE_ID_RE.fullmatch(author_id):
+    if not PROFILE_ID_RE.fullmatch(
+        author_id
+    ):
         logger.error(
-            "GOOGLE_SCHOLAR_ID has an invalid format"
+            "GOOGLE_SCHOLAR_ID has "
+            "an invalid format"
         )
         return 2
 
@@ -250,6 +333,7 @@ def main() -> int:
             author_id,
             api_key,
         )
+
         author = parse_author(response)
 
     except Exception as error:
@@ -265,11 +349,14 @@ def main() -> int:
     )
 
     write_json_atomic(
-        RESULTS_DIR / "gs_data_shieldsio.json",
+        RESULTS_DIR
+        / "gs_data_shieldsio.json",
         {
             "schemaVersion": 1,
             "label": "citations",
-            "message": str(author["citedby"]),
+            "message": str(
+                author["citedby"]
+            ),
         },
     )
 
