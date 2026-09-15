@@ -1,17 +1,16 @@
-"""Fetch Google Scholar profile metrics with Playwright."""
+"""Fetch Google Scholar author metrics through SerpApi."""
 
 import json
 import logging
 import os
-import random
 import re
 import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
-
-from playwright.sync_api import Page, TimeoutError as PlaywrightTimeoutError, sync_playwright
+from urllib.request import Request, urlopen
 
 
 logging.basicConfig(
@@ -21,136 +20,250 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
+SERPAPI_ENDPOINT = "https://serpapi.com/search.json"
 PROFILE_ID_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 
-class ScholarBlockedError(RuntimeError):
-    """Raised when Google Scholar returns a challenge or blocking page."""
-
-
-def parse_number(value: str) -> int:
-    digits = re.sub(r"[^0-9]", "", value)
-    if not digits:
-        raise ValueError(f"Could not parse number from {value!r}")
-    return int(digits)
-
-
-def detect_block(page: Page) -> None:
-    body = page.locator("body").inner_text(timeout=5_000).lower()
-    blocked_markers = (
-        "unusual traffic",
-        "not a robot",
-        "please show you're not a robot",
-        "automated queries",
+def request_serpapi(
+    author_id: str,
+    api_key: str,
+    attempts: int = 3,
+) -> dict:
+    query = urlencode(
+        {
+            "engine": "google_scholar_author",
+            "author_id": author_id,
+            "hl": "en",
+            "num": 20,
+            "api_key": api_key,
+        }
     )
-    if "/sorry/" in page.url or any(marker in body for marker in blocked_markers):
-        raise ScholarBlockedError("Google Scholar returned a CAPTCHA/block page")
+
+    request = Request(
+        f"{SERPAPI_ENDPOINT}?{query}",
+        headers={
+            "Accept": "application/json",
+            "User-Agent": "citation-badge/1.0",
+        },
+    )
+
+    for attempt in range(1, attempts + 1):
+        logger.info(
+            "Requesting Scholar data from SerpApi (%d/%d)",
+            attempt,
+            attempts,
+        )
+
+        try:
+            with urlopen(request, timeout=60) as response:
+                data = json.load(response)
+
+            if data.get("error"):
+                raise RuntimeError(f"SerpApi error: {data['error']}")
+
+            status = data.get("search_metadata", {}).get("status")
+            if status == "Error":
+                raise RuntimeError("SerpApi search failed")
+
+            return data
+
+        except HTTPError as error:
+            body = error.read().decode("utf-8", errors="replace")
+
+            try:
+                message = json.loads(body).get("error", body)
+            except json.JSONDecodeError:
+                message = body
+
+            last_error = RuntimeError(
+                f"SerpApi HTTP {error.code}: {message[:300]}"
+            )
+
+            retryable = error.code == 429 or 500 <= error.code < 600
+
+        except (URLError, TimeoutError) as error:
+            last_error = RuntimeError(
+                f"SerpApi network error: {error}"
+            )
+            retryable = True
+
+        if not retryable or attempt == attempts:
+            raise last_error
+
+        delay = 10 * attempt
+        logger.warning(
+            "Request failed; retrying in %d seconds: %s",
+            delay,
+            last_error,
+        )
+        time.sleep(delay)
+
+    raise RuntimeError("SerpApi returned no result")
 
 
-def scrape_once(page: Page, profile_url: str) -> dict:
-    response = page.goto(profile_url, wait_until="domcontentloaded", timeout=45_000)
-    if response and response.status >= 400:
-        raise RuntimeError(f"Google Scholar returned HTTP {response.status}")
+def metric_values(
+    table: list,
+    position: int,
+    expected_key: str,
+) -> tuple[int, int | None]:
+    try:
+        row = table[position]
 
-    detect_block(page)
-    table = page.locator("#gsc_rsb_st")
-    table.wait_for(state="visible", timeout=20_000)
+        # 英文通常是 h_index、i10_index。
+        # next(iter(...)) 可以兼容 SerpApi 回傳其他語言的欄位名稱。
+        values = row.get(expected_key) or next(iter(row.values()))
 
-    metrics: dict[str, list[int]] = {}
-    for row in table.locator("tbody tr").all():
-        cells = [text.strip() for text in row.locator("td").all_inner_texts()]
-        if len(cells) >= 2:
-            metrics[cells[0].lower()] = [parse_number(value) for value in cells[1:]]
+        total = int(values["all"])
+        since = next(
+            (
+                int(value)
+                for key, value in values.items()
+                if key != "all"
+            ),
+            None,
+        )
 
-    required = ("citations", "h-index", "i10-index")
-    missing = [key for key in required if key not in metrics]
-    if missing:
-        raise RuntimeError(f"Scholar metrics missing: {', '.join(missing)}")
+        return total, since
 
-    name = page.locator("#gsc_prf_in").inner_text(timeout=10_000).strip()
+    except (
+        IndexError,
+        KeyError,
+        StopIteration,
+        TypeError,
+        ValueError,
+    ) as error:
+        raise RuntimeError(
+            f"Invalid Scholar metric at position {position}"
+        ) from error
+
+
+def parse_author(data: dict) -> dict:
+    try:
+        author = data["author"]
+        table = data["cited_by"]["table"]
+    except (KeyError, TypeError) as error:
+        raise RuntimeError(
+            "SerpApi response is missing author metrics"
+        ) from error
+
+    citedby, citedby5y = metric_values(
+        table,
+        0,
+        "citations",
+    )
+    hindex, hindex5y = metric_values(
+        table,
+        1,
+        "h_index",
+    )
+    i10index, i10index5y = metric_values(
+        table,
+        2,
+        "i10_index",
+    )
+
+    publications = {}
+
+    for article in data.get("articles", []):
+        citation_id = article.get("citation_id")
+
+        if not citation_id:
+            continue
+
+        publications[citation_id] = {
+            "author_pub_id": citation_id,
+            "bib": {
+                "title": article.get("title", ""),
+                "author": article.get("authors", ""),
+                "pub_year": article.get("year", ""),
+                "citation": article.get("publication", ""),
+            },
+            "num_citations": int(
+                article.get("cited_by", {}).get("value", 0)
+            ),
+        }
+
     return {
-        "name": name,
-        "citedby": metrics["citations"][0],
-        "citedby5y": metrics["citations"][1] if len(metrics["citations"]) > 1 else None,
-        "hindex": metrics["h-index"][0],
-        "hindex5y": metrics["h-index"][1] if len(metrics["h-index"]) > 1 else None,
-        "i10index": metrics["i10-index"][0],
-        "i10index5y": metrics["i10-index"][1] if len(metrics["i10-index"]) > 1 else None,
-        # Keep the old JSON shape. Avoiding every publication request greatly
-        # reduces Scholar rate limiting on GitHub-hosted runners.
-        "publications": {},
+        "name": author.get("name", ""),
+        "citedby": citedby,
+        "citedby5y": citedby5y,
+        "hindex": hindex,
+        "hindex5y": hindex5y,
+        "i10index": i10index,
+        "i10index5y": i10index5y,
+        "publications": publications,
         "updated": datetime.now(timezone.utc).isoformat(),
     }
 
 
-def fetch_profile(profile_url: str, attempts: int = 2) -> dict:
-    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(
-            headless=True,
-            args=["--disable-dev-shm-usage", "--no-sandbox"],
-        )
-        try:
-            for attempt in range(1, attempts + 1):
-                context = browser.new_context(
-                    locale="en-US",
-                    timezone_id="UTC",
-                    viewport={"width": 1280, "height": 900},
-                )
-                page = context.new_page()
-                try:
-                    logger.info("Fetching Scholar profile (attempt %d/%d)", attempt, attempts)
-                    return scrape_once(page, profile_url)
-                except (PlaywrightTimeoutError, ScholarBlockedError, RuntimeError) as exc:
-                    logger.warning("Attempt %d failed: %s", attempt, exc)
-                    try:
-                        page.screenshot(
-                            path=RESULTS_DIR / f"scholar-failure-{attempt}.png",
-                            full_page=True,
-                        )
-                    except Exception:
-                        logger.debug("Could not save failure screenshot", exc_info=True)
-
-                    if attempt == attempts:
-                        raise
-                    delay = random.uniform(25, 45)
-                    logger.info("Retrying in %.0f seconds", delay)
-                    time.sleep(delay)
-                finally:
-                    context.close()
-        finally:
-            browser.close()
-
-    raise RuntimeError("No Scholar result returned")
-
-
 def write_json_atomic(path: Path, data: dict) -> None:
-    temp_path = path.with_suffix(path.suffix + ".tmp")
-    temp_path.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    temporary_path = path.with_suffix(
+        path.suffix + ".tmp"
+    )
+
+    temporary_path.write_text(
+        json.dumps(
+            data,
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
         encoding="utf-8",
     )
-    temp_path.replace(path)
+
+    temporary_path.replace(path)
 
 
 def main() -> int:
-    author_id = os.environ.get("GOOGLE_SCHOLAR_ID", "").strip()
-    if not author_id or not PROFILE_ID_RE.fullmatch(author_id):
-        logger.error("GOOGLE_SCHOLAR_ID is missing or invalid")
+    author_id = os.environ.get(
+        "GOOGLE_SCHOLAR_ID",
+        "",
+    ).strip()
+
+    api_key = os.environ.get(
+        "SERPAPI_KEY",
+        "",
+    ).strip()
+
+    if not author_id:
+        logger.error(
+            "GOOGLE_SCHOLAR_ID secret is missing"
+        )
         return 2
 
-    profile_url = "https://scholar.google.com/citations?" + urlencode(
-        {"user": author_id, "hl": "en"}
-    )
+    if not PROFILE_ID_RE.fullmatch(author_id):
+        logger.error(
+            "GOOGLE_SCHOLAR_ID has an invalid format"
+        )
+        return 2
+
+    if not api_key:
+        logger.error(
+            "SERPAPI_KEY secret is missing"
+        )
+        return 2
 
     try:
-        author = fetch_profile(profile_url)
-    except Exception as exc:
-        logger.error("Failed to fetch Scholar data: %s", exc)
+        response = request_serpapi(
+            author_id,
+            api_key,
+        )
+        author = parse_author(response)
+
+    except Exception as error:
+        logger.error(
+            "Failed to fetch Scholar data: %s",
+            error,
+        )
         return 1
 
-    write_json_atomic(RESULTS_DIR / "gs_data.json", author)
+    write_json_atomic(
+        RESULTS_DIR / "gs_data.json",
+        author,
+    )
+
     write_json_atomic(
         RESULTS_DIR / "gs_data_shieldsio.json",
         {
@@ -159,7 +272,13 @@ def main() -> int:
             "message": str(author["citedby"]),
         },
     )
-    logger.info("Fetched %s: %s citations", author["name"], author["citedby"])
+
+    logger.info(
+        "Fetched %s: %d citations",
+        author["name"],
+        author["citedby"],
+    )
+
     return 0
 
 
