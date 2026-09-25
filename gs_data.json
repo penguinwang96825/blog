@@ -1,0 +1,152 @@
+{
+  "name": "Yang Wang",
+  "citedby": 62,
+  "citedby5y": 62,
+  "hindex": 4,
+  "hindex5y": 4,
+  "i10index": 2,
+  "i10index5y": 2,
+  "publications": {
+    "EPrTek0AAAAJ:Se3iqnhoufwC": {
+      "author_pub_id": "EPrTek0AAAAJ:Se3iqnhoufwC",
+      "bib": {
+        "title": "From Facts to Insights: A Study on the Generation and Evaluation of Analytical Reports for Deciphering Earnings Calls",
+        "author": "T Goldsack, Y Wang, C Lin, CC Chen",
+        "pub_year": "2025",
+        "citation": "International Conference on Computational Linguistics (COLING), 2025"
+      },
+      "num_citations": 21
+    },
+    "EPrTek0AAAAJ:8k81kl-MbHgC": {
+      "author_pub_id": "EPrTek0AAAAJ:8k81kl-MbHgC",
+      "bib": {
+        "title": "Large-Scale Terminal Agentic Trajectory Generation from Dockerized Environments",
+        "author": "S Wu, Y Li, Y Song, W Zhang, Y Wang, R Batista-Navarro, X Yang, ...",
+        "pub_year": "2026",
+        "citation": "International Conference on Machine Learning (ICML), 2026"
+      },
+      "num_citations": 17
+    },
+    "EPrTek0AAAAJ:2osOgNQ5qMEC": {
+      "author_pub_id": "EPrTek0AAAAJ:2osOgNQ5qMEC",
+      "bib": {
+        "title": "Beyond One-Size-Fits-All: Inversion Learning for Highly Effective NLG Evaluation Prompts",
+        "author": "H Hong, C Xiao, Y Wang, Y Liu, W Rong, C Lin",
+        "pub_year": "2025",
+        "citation": "Transactions of the Association for Computational Linguistics (TACL), 2025"
+      },
+      "num_citations": 6
+    },
+    "EPrTek0AAAAJ:0EnyYjriUFMC": {
+      "author_pub_id": "EPrTek0AAAAJ:0EnyYjriUFMC",
+      "bib": {
+        "title": "Tougher Text, Smarter Models: Raising the Bar for Adversarial Defence Benchmarks",
+        "author": "Y Wang, C Lin",
+        "pub_year": "2025",
+        "citation": "International Conference on Computational Linguistics (COLING), 2025"
+      },
+      "num_citations": 6
+    },
+    "EPrTek0AAAAJ:UebtZRa9Y70C": {
+      "author_pub_id": "EPrTek0AAAAJ:UebtZRa9Y70C",
+      "bib": {
+        "title": "Drivel-ology: Challenging LLMs with Interpreting Nonsense with Depth",
+        "author": "Y Wang, C Xiao, CY Hsiao, ZY Chang, CL Chen, T Loakman, C Lin",
+        "pub_year": "2025",
+        "citation": "Empirical Methods in Natural Language Processing (EMNLP), 2025"
+      },
+      "num_citations": 4
+    },
+    "EPrTek0AAAAJ:3fE2CSJIrl8C": {
+      "author_pub_id": "EPrTek0AAAAJ:3fE2CSJIrl8C",
+      "bib": {
+        "title": "Adversarial Defence without Adversarial Defence: Enhancing Language Model Robustness via Instance-level Principal Component Removal",
+        "author": "Y Wang, C Xiao, Y Li, SE Middleton, N Al Moubayed, C Lin",
+        "pub_year": "2025",
+        "citation": "Transactions of the Association for Computational Linguistics (TACL), 2025"
+      },
+      "num_citations": 3
+    },
+    "EPrTek0AAAAJ:u5HHmVD_uO8C": {
+      "author_pub_id": "EPrTek0AAAAJ:u5HHmVD_uO8C",
+      "bib": {
+        "title": "Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification",
+        "author": "Y Wang, Q Liang, C Xiao, Y Li, NA Moubayed, C Lin",
+        "pub_year": "2023",
+        "citation": "arXiv preprint arXiv:2309.11895, 2023"
+      },
+      "num_citations": 2
+    },
+    "EPrTek0AAAAJ:ULOm3_A8WrAC": {
+      "author_pub_id": "EPrTek0AAAAJ:ULOm3_A8WrAC",
+      "bib": {
+        "title": "Disentangling Similarity and Relatedness in Topic Models",
+        "author": "H Xiao, Y Wang, MA Álvarez, R Breitling",
+        "pub_year": "2026",
+        "citation": "arXiv preprint arXiv:2603.10619, 2026"
+      },
+      "num_citations": 1
+    },
+    "EPrTek0AAAAJ:MXK_kJrjxJIC": {
+      "author_pub_id": "EPrTek0AAAAJ:MXK_kJrjxJIC",
+      "bib": {
+        "title": "Evaluating LLM-Based Grant Proposal Review via Structured Perturbations",
+        "author": "W Thorne, J James, Y Wang, C Lin, D Maynard",
+        "pub_year": "2026",
+        "citation": "ACM Hypertext (ACM HT), 2026"
+      },
+      "num_citations": 1
+    },
+    "EPrTek0AAAAJ:5nxA0vEk-isC": {
+      "author_pub_id": "EPrTek0AAAAJ:5nxA0vEk-isC",
+      "bib": {
+        "title": "The Achilles' Heel of Angular Margins: A Chebyshev Polynomial Fix for Speaker Verification",
+        "author": "Y Wang, Y Liu, C Xiao, C Lin",
+        "pub_year": "2026",
+        "citation": "International Conference on Acoustics, Speech, and Signal Processing (ICASSP), 2026"
+      },
+      "num_citations": 1
+    },
+    "EPrTek0AAAAJ:M3ejUd6NZC8C": {
+      "author_pub_id": "EPrTek0AAAAJ:M3ejUd6NZC8C",
+      "bib": {
+        "title": "When Tool-Backed Skill Retrieval Fails: Source-Style Collapse in Executable Capability Retrieval",
+        "author": "Y Liu, J James, Y Wang, C Xiao, C Lin",
+        "pub_year": "2026",
+        "citation": "The Asia-Pacific Chapter of the Association for Computational Linguistics (AACL), 2026"
+      },
+      "num_citations": 0
+    },
+    "EPrTek0AAAAJ:4TOpqqG69KYC": {
+      "author_pub_id": "EPrTek0AAAAJ:4TOpqqG69KYC",
+      "bib": {
+        "title": "Broken Symmetry in LLM Refusal: Answer Release Is More Local Than Refusal Restoration",
+        "author": "Y Liu, Y Wang, S Wang, C Xiao, C Lin",
+        "pub_year": "2026",
+        "citation": "Empirical Methods in Natural Language Processing (EMNLP), 2026"
+      },
+      "num_citations": 0
+    },
+    "EPrTek0AAAAJ:_kc_bZDykSQC": {
+      "author_pub_id": "EPrTek0AAAAJ:_kc_bZDykSQC",
+      "bib": {
+        "title": "Reading Between the Frames: Interpreting Implicit and Non-literal Meaning in Social Media Videos",
+        "author": "Y Wang, Y Ma, Y Liu, ZY Chang, CL Chen, CY Hsiao, T Loakman, ...",
+        "pub_year": "2026",
+        "citation": "arXiv preprint arXiv:2608.04939, 2026"
+      },
+      "num_citations": 0
+    },
+    "EPrTek0AAAAJ:YOwf2qJgpHMC": {
+      "author_pub_id": "EPrTek0AAAAJ:YOwf2qJgpHMC",
+      "bib": {
+        "title": "Hybrid Adversarial Defence for Natural Language Understanding Tasks",
+        "author": "M Abouzaid, Y Wang, C Lin, SE Middleton",
+        "pub_year": "2026",
+        "citation": "arXiv preprint arXiv:2606.04612, 2026"
+      },
+      "num_citations": 0
+    }
+  },
+  "updated": "2026-09-25T08:53:45.508935+00:00"
+}
