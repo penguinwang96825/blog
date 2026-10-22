@@ -9,10 +9,24 @@ redirect_from:
 
 # 📝 Publications
 
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">EMNLP 2026</div><img src='/images/publications/emnlp_2026_broken.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+- Yiqi Liu, `Yang Wang`, Songxin Wang, Chenghao Xiao, Chenghua Lin. Broken Symmetry in LLM Refusal: Answer Release Is More Local Than Refusal Restoration. *EMNLP*. 2026 <br />
+[[PDF]](https://arxiv.org/pdf/2608.15772)
+</div>
+</div>
+
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">AACL 2026</div><img src='/images/publications/aacl_2026_skill.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 - Yiqi Liu, Joseph James, `Yang Wang`, Chenghao Xiao, Chenghua Lin. When Tool-Backed Skill Retrieval Fails: Source-Style Collapse in Executable Capability Retrieval. *AACL*. 2026 <br />
 [[PDF]](https://arxiv.org/pdf/2608.16502)
+</div>
+</div>
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">AACL 2026</div><img src='/images/publications/aacl_2026_judgemoe.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+- Yiqi Liu, Joseph James, `Yang Wang`, Kun Zhao, Chenghao Xiao, Chenghua Lin. JudgeMoE: Distributional Aggregation for LLM-as-a-Judge. *AACL*. 2026 <br />
+[[PDF]](https://arxiv.org/pdf/2610.07109)
 </div>
 </div>
 
