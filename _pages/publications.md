@@ -9,6 +9,13 @@ redirect_from:
 
 # 📝 Publications
 
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">AACL 2026</div><img src='/images/publications/aacl_2026_skill.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+- Yiqi Liu, Joseph James, `Yang Wang`, Chenghao Xiao, Chenghua Lin. When Tool-Backed Skill Retrieval Fails: Source-Style Collapse in Executable Capability Retrieval. *AACL*. 2026 <br />
+[[PDF]](https://arxiv.org/pdf/2608.16502)
+</div>
+</div>
+
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ACM HT 2026</div><img src='/images/publications/acm_ht_2026_perturbation.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 - William Thorne, Joseph James, `Yang Wang`, Chenghua Lin, Diana Maynard. Evaluating LLM-Based Grant Proposal Review via Structured Perturbations. *ACM HT*. 2026 <br />
@@ -26,6 +33,7 @@ redirect_from:
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">Interspeech 2026</div><img src='/images/publications/interspeech_2026_ielts.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 - Hui Xin Koh, `Yang Wang`, Chenghua Lin. A Multi-Agent Framework to Automate Feedback Generation for IELTS Speaking Test using Multimodal SpeechLMs. *Interspeech*. 2026 <br />
+[[PDF]](https://papers.cool/venue/koh26@interspeech_2026@ISCA)
 </div>
 </div>
 
@@ -76,8 +84,20 @@ redirect_from:
 - `Yang Wang`, Qibin Liang, Chenghao Xiao, Yizhi Li, Noura Al Moubayed, Chenghua Lin. Audio Contrastive-based Fine-tuning: Decoupling Representation Learning and Classification. 2023 <br />
 [[PDF]](https://arxiv.org/pdf/2309.11895) [[Code]](https://github.com/ExtraOrdinaryLab/confit)
 
-- `Yang Wang`, Yanan Ma, Yiqi Liu, Zi Yan Chang, Chi-Li Chen, Chia-Yi Hsiao, Tyler Loakman, Aline Villavicencio, Chenghao Xiao, Chenghua Lin. Reading Between the Frames: Interpreting Implicit and Non-literal Meaning in Social Media Videos. 2026 <br />
+- Hanlin Xiao, `Yang Wang`, Mauricio A. Álvarez, Rainer Breitling. Disentangling Similarity and Relatedness in Topic Models. 2026 <br />
+[[PDF]](https://arxiv.org/pdf/2603.10619)
+
+- Manar Abouzaid, `Yang Wang`, Chenghua Lin, Stuart E. Middleton. Hybrid Adversarial Defence for Natural Language Understanding Tasks. 2026 <br />
+[[PDF]](https://arxiv.org/pdf/2606.04612)
+
+- `Yang Wang`, Yanan Ma, Zi Yan Chang, Tyler Loakman, Chi-Li Chen, Chia-Yi Hsiao, Yeqi Jin, Yiqi Liu, Aline Villavicencio, Chenghao Xiao, Chenghua Lin. Reading Between the Frames of Multimodal Drivelology. 2026 <br />
 [[PDF]](https://arxiv.org/abs/2608.04939) [[Code]](https://github.com/extraordinarylab/drivel-hub-plus) [[HuggingFace]](https://huggingface.co/datasets/extraordinarylab/drivel-hub-plus) [[Website]](https://extraordinarylab.github.io/drivel-hub-plus)
+
+- Yiqi Liu, Ruifeng Yuan, `Yang Wang`, Long Li, Fengyu Cai, Hou Pong Chan, Jialin Yu, Hao Zhang, Chenghua Lin, Chenghao Xiao. World Embedding Benchmark. 2026 <br />
+[[PDF]](https://arxiv.org/pdf/2610.03632)
+
+- `Yang Wang`, Hanlin Xiao, Yanan Ma, Chenghao Xiao, Chenghua Lin. Calibrated Typed Decisions for Entity, Relation, and Event Extraction. 2026 <br />
+[[PDF]](https://arxiv.org/pdf/2610.17113) [[Code]](https://github.com/extraordinarylab/calon) [[HuggingFace]](https://huggingface.co/calon-ai/calon-0.6b) [[Demo]](https://huggingface.co/spaces/hugging-apps/calon-extraction)
 
 # 📜 Conferences
 
