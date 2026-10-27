@@ -15,7 +15,7 @@ from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "_pages" / "publications.md"
+SOURCE = Path(__file__).resolve().parent / "publications.md"
 OUTPUT = ROOT / "assets" / "data" / "papers.json"
 
 ARXIV_API = "http://export.arxiv.org/api/query"
