@@ -3,7 +3,7 @@
   --ink: #111;
   --muted: #888;
   --accent: #0f6e56;
-  --font: -apple-system, "PingFang TC", "Noto Sans TC", "Helvetica Neue", Arial, sans-serif;
+  --font: BlinkMacSystemFont, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }

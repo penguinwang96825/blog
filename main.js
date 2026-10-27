@@ -42,7 +42,7 @@ async function makePoster(p) {
   const c = document.createElement('canvas');
   c.width = W; c.height = H;
   const ctx = c.getContext('2d');
-  const font = '-apple-system, "Helvetica Neue", Arial, sans-serif';
+  const font = 'BlinkMacSystemFont, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif';
   ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, W, H);
 
@@ -86,7 +86,7 @@ async function makePoster(p) {
 function textTexture(text, { size = 64, color = '#111', weight = 700 } = {}) {
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d');
-  const font = `${weight} ${size}px -apple-system, "Helvetica Neue", Arial, sans-serif`;
+  const font = `${weight} ${size}px BlinkMacSystemFont, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif`;
   ctx.font = font;
   c.width = Math.ceil(ctx.measureText(text).width) + 8;
   c.height = Math.ceil(size * 1.3);
