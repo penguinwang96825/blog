@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper Timeline · Yang Wang</title>
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+</head>
+<body>
+<canvas id="scene"></canvas>
+
+<header class="topbar">
+  <a class="logo" href="/">Yang Wang</a>
+  <div class="view-toggle">
+    <button data-view="grid">▦ 總覽</button>
+    <button data-view="timeline" class="active">◷ 時間線</button>
+  </div>
+  <button class="share" id="share">⤴ 分享</button>
+</header>
+
+<section class="focus" id="focus">
+  <div class="focus-meta" id="focus-meta"></div>
+  <div class="focus-date" id="focus-date"></div>
+  <h2 class="focus-title" id="focus-title"></h2>
+  <div class="focus-type" id="focus-type"></div>
+  <button class="btn" id="focus-open">查看詳情</button>
+</section>
+
+<nav class="side">
+  <ul class="years" id="years"></ul>
+  <div class="tabs" id="tabs">
+    <button data-status="published" class="active">Published</button>
+    <button data-status="preprint">Preprint</button>
+  </div>
+</nav>
+
+<section class="grid" id="grid" hidden></section>
+
+<div class="modal" id="modal" hidden>
+  <button class="close" id="modal-close" aria-label="Close">✕</button>
+  <div class="modal-body">
+    <div class="modal-image" id="modal-image"></div>
+    <div class="modal-text">
+      <div class="modal-meta" id="modal-meta"></div>
+      <h1 id="modal-title"></h1>
+      <div class="rule"></div>
+      <div class="modal-date" id="modal-date"></div>
+      <div class="modal-authors" id="modal-authors"></div>
+      <div class="modal-cite" id="modal-cite"></div>
+      <div class="modal-links" id="modal-links"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">已複製連結</div>
+
+<script type="module" src="main.js"></script>
+</body>
+</html>
