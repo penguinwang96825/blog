@@ -1,18 +1,42 @@
 import * as THREE from 'three';
 
-const SPACING = 4.6;       // distance between neighbouring papers on the path
-const CARD_W = 3, CARD_H = 4, CARD_D = 0.12; // text-only (no image) cards
-const CARD_AREA = 17;     // image cards keep the image's aspect ratio at this area
+const DAY_SCALE = 0.09;    // path length per day; both timelines share this date scale
+const MIN_GAP = 6;        // closest two papers on one timeline may stand
+const CARD_W = 3.6, CARD_H = 4.8, CARD_D = 0.12; // text-only (no image) cards
+const CARD_AREA = 24;     // image cards keep the image's aspect ratio at this area
 const CARD_SIDE = 2.8;    // how far cards stand from the path centre
 const CARD_YAW = Math.atan2(-0.8, 0.6); // face the camera, which sits on the older side
+const FOCUS_SCALE = 1.3, FOCUS_LIFT = 0.5; // the paper being looked at grows and rises
 const BG = 0xf3f3f3;
 const ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
 const TRACK_Z = { published: 0, preprint: 16 }; // two parallel timelines
 
 const $ = (id) => document.getElementById(id);
-const papers = await (await fetch('/assets/data/papers.json')).json();
+const toTime = (d) => new Date(d).getTime();
+// Citation counts come from Google Scholar, refreshed every two days by the get-citation-data
+// workflow; papers.json keeps the counts from its last build in case that file can't be read
+const SCHOLAR_DATA = 'https://raw.githubusercontent.com/penguinwang96825/blog/google-scholar-stats/gs_data.json';
+const [papers, scholar] = await Promise.all([
+  fetch('/assets/data/papers.json').then((r) => r.json()),
+  fetch(SCHOLAR_DATA, { signal: AbortSignal.timeout(3000) }).then((r) => r.json()).catch(() => null),
+]);
+if (scholar) {
+  const key = (t) => t.toLowerCase().replace(/[^a-z0-9]/g, ''); // same matching as fetch_papers.py
+  const counts = new Map(Object.values(scholar.publications).map((s) => [key(s.bib.title), s.num_citations]));
+  papers.forEach((p) => { p.citations = counts.get(key(p.title)) ?? p.citations; });
+}
+papers.sort((a, b) => toTime(a.date) - toTime(b.date));
+// Both timelines use one date scale, so a date sits at the same spot on each. Where papers on
+// one timeline come closer than MIN_GAP, the scale stretches at that spot for both timelines.
+const lastOn = {};
+papers.forEach((p, i) => {
+  const prev = papers[i - 1];
+  p.x = prev ? prev.x + (toTime(p.date) - toTime(prev.date)) / 864e5 * DAY_SCALE : 0;
+  if (lastOn[p.status]) p.x = Math.max(p.x, lastOn[p.status].x + MIN_GAP);
+  lastOn[p.status] = p;
+  p.z0 = TRACK_Z[p.status];
+});
 const tracks = Object.keys(TRACK_Z).map((s) => papers.filter((p) => p.status === s));
-tracks.forEach((list) => list.forEach((p, i) => { p.x = i * SPACING; p.z0 = TRACK_Z[p.status]; }));
 papers.forEach((p) => {
   p.id = p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
 });
@@ -40,8 +64,9 @@ const loadImage = (src) => new Promise((res) => {
 async function makePoster(p) {
   const W = 600, H = 800, pad = 44;
   const c = document.createElement('canvas');
-  c.width = W; c.height = H;
+  c.width = W * 2; c.height = H * 2; // drawn at double resolution so the text stays sharp
   const ctx = c.getContext('2d');
+  ctx.scale(2, 2);
   const font = 'BlinkMacSystemFont, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif';
   ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, W, H);
@@ -115,16 +140,16 @@ const sun = new THREE.DirectionalLight(0xffffff, 1.2);
 sun.position.set(-5, 10, 8);
 scene.add(sun);
 
-// Map a date onto the path: papers are evenly spaced, dates in between are interpolated.
-const toTime = (d) => new Date(d).getTime();
-function dateToX(d, papers) {
-  const t = toTime(d);
-  if (t <= toTime(papers[0].date)) return papers[0].x - (toTime(papers[0].date) - t) / 864e5 / 60 * SPACING;
+// Map a date onto the path, on the scale shared by both timelines (interpolated between papers,
+// so the stretched spots stretch the ticks too).
+function dateToX(d) {
+  const t = toTime(d), first = papers[0], last = papers.at(-1);
+  if (t <= toTime(first.date)) return first.x - (toTime(first.date) - t) / 864e5 * DAY_SCALE;
   for (let i = 1; i < papers.length; i++) {
-    const a = toTime(papers[i - 1].date), b = toTime(papers[i].date);
-    if (t <= b) return papers[i - 1].x + (b === a ? 0 : (t - a) / (b - a)) * SPACING;
+    const a = papers[i - 1], b = papers[i], ta = toTime(a.date), tb = toTime(b.date);
+    if (t <= tb) return a.x + (tb === ta ? 0 : (t - ta) / (tb - ta)) * (b.x - a.x);
   }
-  return papers.at(-1).x + (t - toTime(papers.at(-1).date)) / 864e5 / 60 * SPACING;
+  return last.x + (t - toTime(last.date)) / 864e5 * DAY_SCALE;
 }
 
 function flat(mesh, x, z, y = 0.01) {
@@ -136,11 +161,12 @@ function flat(mesh, x, z, y = 0.01) {
 
 const tickMat = new THREE.MeshBasicMaterial({ color: 0x9a9a9a });
 
-function buildTrack(papers) {
-  const z0 = papers[0].z0;
-  // Citation wave: path half-width bulges around each paper, amplitude ~ log(citations).
+function buildTrack(track) {
+  const z0 = track[0].z0;
+  // Both paths run over the same stretch of time, so they line up side by side.
   const X0 = papers[0].x - 14, X1 = papers.at(-1).x + 30;
-  const halfWidth = (x) => 0.32 + papers.reduce(
+  // Citation wave: path half-width bulges around each paper, amplitude ~ log(citations).
+  const halfWidth = (x) => 0.32 + track.reduce(
     (s, p) => s + 0.55 * Math.log1p(p.citations) * Math.exp(-(((x - p.x) / 1.6) ** 2)), 0);
   const N = 800, pos = [], idx = [];
   for (let i = 0; i <= N; i++) {
@@ -155,12 +181,9 @@ function buildTrack(papers) {
 
   // Monthly ticks + year labels lying on the ground
   const first = new Date(papers[0].date), last = new Date(papers.at(-1).date);
-  // Only years that have papers get ticks/labels; empty years would be squeezed into one gap.
-  const years = new Set(papers.map((p) => new Date(p.date).getFullYear()));
   for (let y = first.getFullYear(); y <= last.getFullYear(); y++) {
-    if (!years.has(y)) continue;
     for (let m = 0; m < 12; m++) {
-      const x = dateToX(new Date(Date.UTC(y, m, 1)), papers);
+      const x = dateToX(new Date(Date.UTC(y, m, 1)));
       if (x < X0 || x > X1) continue;
       const major = m === 0;
       flat(new THREE.Mesh(new THREE.PlaneGeometry(major ? 0.06 : 0.04, major ? 0.5 : 0.22), tickMat), x, z0);
@@ -199,7 +222,7 @@ await Promise.all(papers.map(async (p) => {
   const w = img ? Math.sqrt(CARD_AREA * img.width / img.height) : CARD_W;
   const h = img ? CARD_AREA / w : CARD_H;
   tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 8;
+  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   const front = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.5, transparent: true });
   const edges = edgeMat.clone();
   edges.transparent = true;
@@ -218,7 +241,7 @@ await Promise.all(papers.map(async (p) => {
   const marker = flat(new THREE.Mesh(new THREE.PlaneGeometry(0.1, 0.5),
     new THREE.MeshBasicMaterial({ color: ACCENT })), p.x, p.z0, 0.012);
 
-  cards.push({ mesh, mats: [front, edges], shadow, marker, paper: p, opacity: 1, scale: 1 });
+  cards.push({ mesh, mats: [front, edges], shadow, marker, w, h, paper: p, opacity: 1, scale: 1 });
 }));
 cards.sort((a, b) => a.paper.x - b.paper.x);
 
@@ -233,9 +256,12 @@ let camX = 0, camZ = 0;
 let snapTimer;
 
 function selectStatus(s, keepPaper) {
+  // switching timelines stays at the same time: the paper nearest the one in view
+  const when = list.length ? toTime(focused().date) : null;
   status = s;
   list = papers.filter((p) => p.status === s);
-  const i = keepPaper ? list.indexOf(keepPaper) : list.length - 1;
+  const nearest = () => list.reduce((best, p, j) => Math.abs(toTime(p.date) - when) < Math.abs(toTime(list[best].date) - when) ? j : best, 0);
+  const i = keepPaper ? list.indexOf(keepPaper) : when === null ? list.length - 1 : nearest();
   target = pos = Math.max(0, i);
   document.querySelectorAll('#tabs button').forEach((b) => b.classList.toggle('active', b.dataset.status === s));
   renderYears();
@@ -245,6 +271,19 @@ function selectStatus(s, keepPaper) {
 
 const focused = () => list[Math.round(target)];
 
+// A float index into list <-> a position along the path (papers are no longer evenly spaced)
+function indexToX(f) {
+  const i = Math.floor(f), a = list[i].x;
+  return i + 1 < list.length ? a + (list[i + 1].x - a) * (f - i) : a;
+}
+function xToIndex(x) {
+  if (x <= list[0].x) return 0;
+  for (let i = 1; i < list.length; i++) {
+    if (x <= list[i].x) return i - 1 + (x - list[i - 1].x) / (list[i].x - list[i - 1].x);
+  }
+  return list.length - 1;
+}
+
 function updateFocus() {
   const p = focused();
   $('focus-meta').textContent = `${p.status === 'published' ? 'Published' : 'Preprint'} · ${p.year}`;
@@ -252,6 +291,7 @@ function updateFocus() {
   $('focus-title').textContent = p.title;
   $('focus-type').textContent = p.badge || 'arXiv';
   document.querySelectorAll('#years li').forEach((li) => li.classList.toggle('active', +li.dataset.year === p.year));
+  measureFree(); // a longer title makes the panel taller on phones
 }
 
 function renderYears() {
@@ -347,19 +387,56 @@ addEventListener('keydown', (e) => {
 const ray = new THREE.Raycaster();
 const pointer = new THREE.Vector2(-9, -9);
 let hovered = null, downAt = null;
+let drag = null; // { x, y, moved } while the left mouse button holds the path
 
 function pick(e) {
   pointer.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
   ray.setFromCamera(pointer, camera);
-  const hit = ray.intersectObjects(cards.map((c) => c.mesh))[0];
+  const hit = ray.intersectObjects(cards.map((c) => c.mesh), false)[0];
   return hit ? cards.find((c) => c.mesh === hit.object) : null;
 }
+
+// Screen pixels covered by one unit of path at the paper in view, as a 2D direction
+const toScreen = (v) => { v.project(camera); return new THREE.Vector2((v.x + 1) / 2 * innerWidth, (1 - v.y) / 2 * innerHeight); };
+function pathOnScreen() {
+  const x = indexToX(target), z = TRACK_Z[status];
+  return toScreen(new THREE.Vector3(x + 1, 0, z)).sub(toScreen(new THREE.Vector3(x, 0, z)));
+}
+
 canvas.addEventListener('pointermove', (e) => {
+  if (drag) {
+    if (!drag.moved && Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) {
+      drag.moved = true;
+      canvas.style.cursor = 'grabbing';
+    }
+    if (drag.moved) {
+      // the path follows the cursor: only the part of the move along the path counts
+      const along = pathOnScreen();
+      const units = ((e.clientX - drag.x) * along.x + (e.clientY - drag.y) * along.y) / along.lengthSq();
+      target = xToIndex(indexToX(target) - units);
+      updateFocus();
+    }
+    drag.x = e.clientX;
+    drag.y = e.clientY;
+    return;
+  }
   hovered = pick(e);
-  canvas.style.cursor = hovered ? 'pointer' : '';
+  canvas.style.cursor = hovered ? 'pointer' : view === 'timeline' ? 'grab' : '';
 });
-canvas.addEventListener('pointerdown', (e) => { downAt = [e.clientX, e.clientY]; });
+canvas.addEventListener('pointerdown', (e) => {
+  downAt = [e.clientX, e.clientY];
+  if (e.pointerType === 'mouse' && e.button === 0 && view === 'timeline' && $('modal').hidden) {
+    drag = { x: e.clientX, y: e.clientY, moved: false };
+    canvas.setPointerCapture(e.pointerId);
+  }
+});
 canvas.addEventListener('pointerup', (e) => {
+  if (drag) {
+    const moved = drag.moved;
+    drag = null;
+    canvas.style.cursor = '';
+    if (moved) { goTo(Math.round(target)); return; } // settle on the nearest paper
+  }
   if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) return;
   const c = pick(e);
   if (!c) return;
@@ -367,6 +444,8 @@ canvas.addEventListener('pointerup', (e) => {
   else goTo(list.indexOf(c.paper));
   openPaper(c.paper);
 });
+
+canvas.addEventListener('pointercancel', () => { drag = null; });
 
 $('focus-open').onclick = () => openPaper(focused());
 $('modal-close').onclick = closePaper;
@@ -386,11 +465,21 @@ $('share').onclick = async () => {
 
 // ---------- loop ----------
 
+// The part of the screen the text panel leaves free (beside it, or below it on phones); the
+// paper in view is centred there by shifting the camera's view
+let free = { w: innerWidth, h: innerHeight };
+function measureFree() {
+  const r = $('focus').getBoundingClientRect();
+  const wide = innerWidth >= 760;
+  free = wide ? { w: innerWidth - r.right, h: innerHeight } : { w: innerWidth, h: innerHeight - r.bottom };
+  camera.setViewOffset(innerWidth, innerHeight, wide ? -r.right / 2 : 0, wide ? 0 : -r.bottom / 2, innerWidth, innerHeight);
+}
+
 function resize() {
   renderer.setSize(innerWidth, innerHeight, false);
   camera.aspect = innerWidth / innerHeight;
   camera.fov = innerWidth < 760 ? 48 : 32;
-  camera.updateProjectionMatrix();
+  measureFree();
 }
 addEventListener('resize', resize);
 resize();
@@ -402,26 +491,44 @@ camX = list[Math.round(target)].x;
 camZ = TRACK_Z[status];
 
 const lookAt = new THREE.Vector3();
+const VIEW = new THREE.Vector3(-15, 13, 17), VIEW_DIST = VIEW.length(); // camera offset from the paper in view
+VIEW.normalize();
+let lookY = 3, dist = VIEW_DIST;
 renderer.setAnimationLoop(() => {
-  pos += (target - pos) * 0.12;
-  const i = Math.floor(pos), f = pos - i;
-  const x = list[i].x + ((list[i + 1]?.x ?? list[i].x) - list[i].x) * f;
-  camX += (x - camX) * 0.08;
+  // while dragging the path follows the cursor closely; otherwise it glides
+  const dragging = drag?.moved;
+  pos += (target - pos) * (dragging ? 0.35 : 0.12);
+  camX += (indexToX(pos) - camX) * (dragging ? 0.35 : 0.08);
   camZ += (TRACK_Z[status] - camZ) * 0.08;
-  camera.position.set(camX - 20, 19, camZ + 23);
-  lookAt.set(camX + 5, 1, camZ - 2);
+
+  // the paper in view stands in the middle of the free part of the screen (see measureFree)
+  const fp = focused();
+  const fc = cards.find((c) => c.paper === fp);
+  lookY += ((fc ? fc.h * FOCUS_SCALE / 2 + 0.05 + FOCUS_LIFT : 3) - lookY) * 0.1;
+  // back off when the free part of the screen is too small for it
+  const perUnit = innerHeight / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))); // pixels per unit at distance 1
+  const need = fc ? Math.max(fc.w * FOCUS_SCALE * perUnit / (0.9 * free.w), fc.h * FOCUS_SCALE * perUnit / (0.8 * free.h)) : 0;
+  dist += (Math.max(VIEW_DIST, need) - dist) * 0.1;
+  const cardZ = camZ - CARD_SIDE;
+  lookAt.set(camX, lookY, cardZ);
+  camera.position.copy(lookAt).addScaledVector(VIEW, dist);
   camera.lookAt(lookAt);
 
-  const fp = focused();
   for (const c of cards) {
-    const want = c.paper.status === status ? 1 : 0.12;
+    const isFocus = c.paper === fp;
+    // the paper in view at full strength, the rest of its timeline faded, the other timeline nearly gone
+    // (and any card right in front of the camera, which would only block the view)
+    const want = (c.paper.status !== status ? 0.12 : isFocus ? 1 : 0.5) * THREE.MathUtils.smoothstep(c.mesh.position.distanceTo(camera.position), 8, 14);
     c.opacity += (want - c.opacity) * 0.12;
-    c.mats.forEach((m) => { m.opacity = c.opacity; });
+    c.mats.forEach((m) => { m.opacity = c.opacity; m.depthTest = !isFocus; });
     c.shadow.material.opacity = c.opacity;
-    c.marker.visible = c.paper === fp;
-    const s = c === hovered || c.paper === fp ? 1.06 : 1;
+    c.marker.visible = isFocus;
+    // it also grows, rises and draws over its neighbours
+    const s = isFocus ? FOCUS_SCALE : c === hovered ? 1.06 : 1;
     c.scale += (s - c.scale) * 0.15;
     c.mesh.scale.setScalar(c.scale);
+    c.mesh.position.y = c.h / 2 * c.scale + 0.05 + Math.max(0, (c.scale - 1) / (FOCUS_SCALE - 1)) * FOCUS_LIFT;
+    c.mesh.renderOrder = isFocus ? 10 : 0;
   }
   renderer.render(scene, camera);
 });

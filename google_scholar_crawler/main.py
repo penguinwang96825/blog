@@ -45,7 +45,7 @@ def request_serpapi(
             "engine": "google_scholar_author",
             "author_id": author_id,
             "hl": "en",
-            "num": 20,
+            "num": 100,  # the most SerpApi returns per page; 20 would drop papers once the profile has more
             "api_key": api_key,
         }
     )

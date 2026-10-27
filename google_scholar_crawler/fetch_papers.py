@@ -1,8 +1,9 @@
 """Build assets/data/papers.json for the paper timeline page.
 
-Parses _pages/publications.md, then enriches each paper with
-abstract / date (arXiv) and citation count (Semantic Scholar).
-Uses only the standard library.
+Parses publications.md, then enriches each paper with abstract / date
+(arXiv, or Semantic Scholar for papers without an arXiv id) and citation
+count (Google Scholar, as fetched by main.py into the google-scholar-stats
+branch). Uses only the standard library.
 """
 
 import json
@@ -20,7 +21,9 @@ OUTPUT = ROOT / "assets" / "data" / "papers.json"
 
 ARXIV_API = "http://export.arxiv.org/api/query"
 S2_API = "https://api.semanticscholar.org/graph/v1/paper"
-S2_FIELDS = "title,citationCount,publicationDate,abstract"
+S2_FIELDS = "title,publicationDate,abstract"
+# Written every two days by the get-citation-data workflow (main.py, Google Scholar via SerpApi)
+SCHOLAR_DATA = "https://raw.githubusercontent.com/penguinwang96825/blog/google-scholar-stats/gs_data.json"
 ATOM = {"a": "http://www.w3.org/2005/Atom"}
 
 # Preprints are a plain list in publications.md (no thumbnail), so map them here by arXiv id.
@@ -132,18 +135,31 @@ def fetch_s2_match(title):
     return json.loads(raw)["data"][0] if raw else {}
 
 
+def title_key(title):
+    """Titles compared without case, spacing or punctuation."""
+    return re.sub(r"[^a-z0-9]", "", title.lower())
+
+
+def fetch_scholar():
+    data = json.loads(get(SCHOLAR_DATA))
+    return {title_key(p["bib"]["title"]): p["num_citations"] for p in data["publications"].values()}
+
+
 def main():
     papers = parse_publications()
     ids = [p["arxiv_id"] for p in papers if p["arxiv_id"]]
     arxiv = fetch_arxiv(ids)
     s2_by_arxiv = fetch_s2_batch(ids)
+    scholar = fetch_scholar()
 
     for p in papers:
         s2 = s2_by_arxiv[p["arxiv_id"]] if p["arxiv_id"] else fetch_s2_match(p["title"])
         ax = arxiv.get(p["arxiv_id"], {})
         p["abstract"] = ax.get("abstract") or s2.get("abstract")
         p["date"] = ax.get("date") or s2.get("publicationDate") or f"{p['year']}-01-01"
-        p["citations"] = s2.get("citationCount") or 0
+        p["citations"] = scholar.get(title_key(p["title"]), 0)
+        if title_key(p["title"]) not in scholar:
+            print(f"  not on the Google Scholar profile: {p['title'][:60]}")
         print(f"{p['date']}  {p['citations']:>4}  {p['status']:<9}  {p['title'][:60]}")
 
     papers.sort(key=lambda p: p["date"])
